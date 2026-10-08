@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick Reference | The Realm Wiki</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">⚖</div>
+          <div>
+            <h1>The Realm</h1>
+            <p>Code of Laws & Governance</p>
+          </div>
+        </div>
+
+        <nav class="side-nav" aria-label="Main navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="government.html">Monarchy & Government</a>
+          <a class="nav-link" href="legal-codex.html">Legal Codex</a>
+          <a class="nav-link" href="civil-principles.html">Civil Principles</a>
+          <a class="nav-link" href="religious-laws.html">Religious Laws</a>
+          <a class="nav-link" href="judiciary.html">Judiciary</a>
+          <a class="nav-link" href="legal-procedure.html">Legal Procedure</a>
+          <a class="nav-link active" href="quick-reference.html">Quick Reference</a>
+        </nav>
+
+        <div class="search-panel">
+          <label for="searchInput" class="sr-only">Search the wiki</label>
+          <input id="searchInput" type="search" placeholder="Search this page..." />
+          <div id="searchResults" class="search-results" aria-live="polite"></div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow">Quick view</p>
+            <h2>Quick Reference</h2>
+          </div>
+          <button class="print-button" onclick="window.print()">Print</button>
+        </header>
+
+        <article class="article">
+          <section>
+            <h3>At a glance</h3>
+            <div class="table-box">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Topic</th>
+                    <th>Quick answer</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Highest authority</td>
+                    <td>The Crown</td>
+                  </tr>
+                  <tr>
+                    <td>Who is bound by law</td>
+                    <td>All subjects, regardless of rank, title, or status</td>
+                  </tr>
+                  <tr>
+                    <td>What creates lawful authority</td>
+                    <td>Official office, lawful appointment, and legal limits</td>
+                  </tr>
+                  <tr>
+                    <td>What is required before execution</td>
+                    <td>A lawful judicial process for capital offenses</td>
+                  </tr>
+                  <tr>
+                    <td>What prevents arbitrary punishment</td>
+                    <td>Due process, evidence, fair review, and legal limits</td>
+                  </tr>
+                  <tr>
+                    <td>Who resolves disputes</td>
+                    <td>The Judiciary, operating under the Law</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section>
+            <h3>Most important offenses</h3>
+            <div class="card-list">
+              <div class="card">
+                <h4>Assault</h4>
+                <p>Use or attempted use of unlawful force.</p>
+              </div>
+              <div class="card">
+                <h4>Theft</h4>
+                <p>Unlawful taking of property.</p>
+              </div>
+              <div class="card">
+                <h4>Murder</h4>
+                <p>Unlawful killing with intent or major culpability.</p>
+              </div>
+              <div class="card">
+                <h4>Treason</h4>
+                <p>Betrayal of the lawful Crown or Realm.</p>
+              </div>
+              <div class="card">
+                <h4>Kidnapping</h4>
+                <p>Unlawful seizure or confinement of a person.</p>
+              </div>
+              <div class="card">
+                <h4>Corruption</h4>
+                <p>Misuse of office, authority, or gifts for unlawful ends.</p>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3>Legal maxim</h3>
+            <div class="quote-box">
+              <blockquote>
+                Power without Law becomes tyranny. Law without justice becomes oppression. The Realm requires both.
+              </blockquote>
+            </div>
+          </section>
+        </article>
+      </main>
+    </div>
+
+    <script src="search.js"></script>
+  </body>
+</html>
