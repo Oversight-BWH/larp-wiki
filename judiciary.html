@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Judiciary | The Realm Wiki</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">⚖</div>
+          <div>
+            <h1>The Realm</h1>
+            <p>Code of Laws & Governance</p>
+          </div>
+        </div>
+
+        <nav class="side-nav" aria-label="Main navigation">
+          <a class="nav-link" href="index.html">Home</a>
+          <a class="nav-link" href="government.html">Monarchy & Government</a>
+          <a class="nav-link" href="legal-codex.html">Legal Codex</a>
+          <a class="nav-link" href="civil-principles.html">Civil Principles</a>
+          <a class="nav-link" href="religious-laws.html">Religious Laws</a>
+          <a class="nav-link active" href="judiciary.html">Judiciary</a>
+          <a class="nav-link" href="legal-procedure.html">Legal Procedure</a>
+          <a class="nav-link" href="quick-reference.html">Quick Reference</a>
+        </nav>
+
+        <div class="search-panel">
+          <label for="searchInput" class="sr-only">Search the wiki</label>
+          <input id="searchInput" type="search" placeholder="Search this page..." />
+          <div id="searchResults" class="search-results" aria-live="polite"></div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow">Justice</p>
+            <h2>Judiciary</h2>
+          </div>
+          <button class="print-button" onclick="window.print()">Print</button>
+        </header>
+
+        <article class="article">
+          <nav class="page-toc" aria-label="Page sections">
+            <strong>Contents</strong>
+            <ul>
+              <li><a href="#threshold">Threshold for Trial</a></li>
+              <li><a href="#authority">Judicial Authority</a></li>
+              <li><a href="#punishments">Punishments and Sentencing</a></li>
+              <li><a href="#appointment">Appointment and Removal</a></li>
+            </ul>
+          </nav>
+
+          <section id="threshold">
+            <h3>Threshold for Judicial Trial</h3>
+            <p>
+              Not every offense requires a full courtroom proceeding. Minor matters may be resolved administratively when
+              the facts are clear, the punishment is within the authority of the enforcing officer, and no substantial
+              dispute exists. However, serious or disputed matters must proceed to judicial review.
+            </p>
+            <ul class="standard-list">
+              <li>Administrative resolution for clear minor matters</li>
+              <li>Judicial review for disputes over facts or law</li>
+              <li>Mandatory judicial review for capital offenses</li>
+              <li>Failure to apply process is itself a legal wrong</li>
+            </ul>
+          </section>
+
+          <section id="authority">
+            <h3>Judicial Authority</h3>
+            <p>
+              Courts exist to interpret and apply the Law. Judges must consider statute, evidence, witness testimony,
+              intent, aggravating factors, and mitigating circumstances. They must not substitute personal preference for
+              legal principle.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Burden of proof</h4>
+                <p>The prosecution must establish guilt through lawful evidence. A person must not be punished merely because they are disliked or politically unpopular.</p>
+              </div>
+              <div class="card">
+                <h4>Conflict of interest</h4>
+                <p>A judge must recuse themselves when they have a substantial personal stake, relationship, or involvement in the case.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="punishments">
+            <h3>Punishments and Sentencing</h3>
+            <p>
+              Sentences must be proportionate and grounded in both the legal classification of the offense and the
+              circumstances of the case. The Law recognizes aggravating and mitigating factors that may shift a
+              punishment up or down.
+            </p>
+            <div class="table-box">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Examples</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Available punishments</td>
+                    <td>Warning, fine, confiscation, imprisonment, house arrest, exile, loss of office, corporal punishment, execution</td>
+                  </tr>
+                  <tr>
+                    <td>Aggravating factors</td>
+                    <td>Premeditation, vulnerability of victim, abuse of authority, repeated misconduct, obstruction of justice</td>
+                  </tr>
+                  <tr>
+                    <td>Mitigating factors</td>
+                    <td>Cooperation, confession, coercion, restitution, limited harm</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section id="appointment">
+            <h3>Appointment and Removal</h3>
+            <p>
+              Judges and judicial officers must be appointed through lawful authority and selected for impartiality,
+              competence, and integrity. They may be removed for corruption, bias, repetitive incompetence, criminal
+              conduct, or direct violation of the Law.
+            </p>
+          </section>
+        </article>
+      </main>
+    </div>
+
+    <script src="search.js"></script>
+  </body>
+</html>
