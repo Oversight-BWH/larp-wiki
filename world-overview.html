@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Overview | The Realm</title>
+    <style>
+      :root {
+        --bg: #f3f6fb;
+        --panel: #ffffff;
+        --panel-alt: #eef3fb;
+        --sidebar: #10263e;
+        --text: #17212d;
+        --muted: #67788a;
+        --line: #dfe7f3;
+        --primary: #1a4d7a;
+        --gold: #b8892b;
+        --shadow: 0 14px 30px rgba(16, 38, 62, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(180deg, #edf3fb 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      .sidebar {
+        background: var(--sidebar);
+        color: #edf4ff;
+        padding: 28px 20px;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 28px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.08);
+        font-size: 1.5rem;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 1.45rem;
+      }
+
+      .brand p {
+        margin: 4px 0 0 0;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 0.82rem;
+      }
+
+      .side-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .nav-link {
+        color: rgba(255, 255, 255, 0.82);
+        text-decoration: none;
+        padding: 10px 12px;
+        border-radius: 10px;
+        transition: 0.2s ease;
+        font-size: 0.97rem;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        background: rgba(255, 255, 255, 0.09);
+        color: #fff;
+      }
+
+      .search-panel {
+        margin-top: 26px;
+      }
+
+      .search-panel input {
+        width: 100%;
+        padding: 11px 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.06);
+        color: white;
+        outline: none;
+      }
+
+      .search-panel input::placeholder {
+        color: rgba(255, 255, 255, 0.65);
+      }
+
+      .search-results {
+        margin-top: 12px;
+        display: none;
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 10px;
+        padding: 10px;
+        color: #fff;
+        max-height: 180px;
+        overflow-y: auto;
+      }
+
+      .search-results.visible {
+        display: block;
+      }
+
+      .search-results a {
+        display: block;
+        padding: 8px 6px;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+      }
+
+      .search-results a:hover {
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .content {
+        padding: 28px clamp(18px, 3vw, 40px) 40px;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+        margin-bottom: 26px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        margin: 0 0 8px 0;
+        color: var(--gold);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-weight: 700;
+      }
+
+      .page-header h2 {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 2.6rem);
+        line-height: 1.1;
+      }
+
+      .print-button {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .article {
+        max-width: 980px;
+      }
+
+      .article section {
+        margin-bottom: 32px;
+      }
+
+      .article h3 {
+        font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+        margin-bottom: 16px;
+      }
+
+      .article h4 {
+        font-size: 1.1rem;
+        margin: 0 0 10px 0;
+      }
+
+      .article p,
+      .article li {
+        font-size: 1.02rem;
+        line-height: 1.75;
+        color: var(--text);
+      }
+
+      .page-toc {
+        background: var(--panel-alt);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 16px 18px;
+        margin-bottom: 18px;
+      }
+
+      .page-toc ul {
+        margin: 12px 0 0 0;
+        padding-left: 18px;
+      }
+
+      .page-toc a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .card-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: static;
+          height: auto;
+        }
+
+        .card-list {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">🗺</div>
+          <div>
+            <h1>The Realm</h1>
+            <p>World & Houses</p>
+          </div>
+        </div>
+
+        <nav class="side-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#westeros">World Overview</a>
+          <a class="nav-link" href="#north">The North</a>
+          <a class="nav-link" href="#vale">The Vale</a>
+          <a class="nav-link" href="#riverlands">The Riverlands</a>
+          <a class="nav-link" href="#crownlands">The Crownlands</a>
+          <a class="nav-link" href="#reach">The Reach</a>
+          <a class="nav-link" href="#stormlands">The Stormlands</a>
+          <a class="nav-link" href="#dorne">Dorne</a>
+          <a class="nav-link" href="#westerlands">The Westerlands</a>
+        </nav>
+
+        <div class="search-panel">
+          <label for="searchInput" class="sr-only">Search the wiki</label>
+          <input id="searchInput" type="search" placeholder="Search this page..." />
+          <div id="searchResults" class="search-results" aria-live="polite"></div>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="page-header">
+          <div>
+            <p class="eyebrow">Geography</p>
+            <h2>World Overview</h2>
+          </div>
+          <button class="print-button" onclick="window.print()">Print</button>
+        </header>
+
+        <article class="article">
+          <nav class="page-toc" aria-label="Page sections">
+            <strong>Contents</strong>
+            <ul>
+              <li><a href="#westeros">Westeros</a></li>
+              <li><a href="#north">The North</a></li>
+              <li><a href="#vale">The Vale of Arryn</a></li>
+              <li><a href="#riverlands">The Riverlands</a></li>
+              <li><a href="#crownlands">The Crownlands</a></li>
+              <li><a href="#reach">The Reach</a></li>
+              <li><a href="#stormlands">The Stormlands</a></li>
+              <li><a href="#dorne">Dorne</a></li>
+              <li><a href="#westerlands">The Westerlands</a></li>
+            </ul>
+          </nav>
+
+          <section id="westeros">
+            <h3>Westeros</h3>
+            <p>
+              Westeros is the largest continent in the known world, spanning thousands of miles from the frozen wastes
+              beyond the Wall in the north to the deserts of Dorne in the south. The continent is divided into Nine
+              Regions, often called the Seven Kingdoms after the unification under Targaryen rule.
+            </p>
+            <p>
+              The Realm is governed by a single Crown, seated in King's Landing at the Crownlands. Below the Crown lie
+              the great Houses, each ruling their own region and answering to the throne.
+            </p>
+          </section>
+
+          <section id="north">
+            <h3>The North</h3>
+            <p>
+              The North is the largest region by area, a vast expanse of forests, mountains, and harsh winters. The
+              people of the North are hardy, loyal, and bound by strong traditions of honor and duty. The North is
+              ruled from Winterfell, a massive castle built around natural hot springs.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Capital</h4>
+                <p>Winterfell, seat of House Stark</p>
+              </div>
+              <div class="card">
+                <h4>Geography</h4>
+                <p>Forests, mountains, and long winters. The Wall stands at the far north, separating the Realm from the lands beyond.</p>
+              </div>
+              <div class="card">
+                <h4>Major Houses</h4>
+                <p>House Stark (Warden of the North), House Bolton, House Karstark, House Umber, House Manderly, House Mormont</p>
+              </div>
+              <div class="card">
+                <h4>Culture</h4>
+                <p>Ancient traditions, loyalty to the Stark name, and worshipping of the Old Gods mark the Northern character.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="vale">
+            <h3>The Vale of Arryn</h3>
+            <p>
+              The Vale is a region of mountains and fertile valleys, protected by high peaks that make invasion difficult.
+              The Vale is ruled from the Eyrie, a fortress built high in the mountains, accessible only by narrow passes
+              and winding roads.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Capital</h4>
+                <p>The Eyrie, seat of House Arryn</p>
+              </div>
+              <div class="card">
+                <h4>Geography</h4>
+                <p>High mountains, fertile valleys, and protected passes. The Eyrie sits on a peak nearly unreachable by conventional siege.</p>
+              </div>
+              <div class="card">
+                <h4>Major Houses</h4>
+                <p>House Arryn (Warden of the Vale), House Royce, House Baelish, House Waynwood, House Corbray</p>
+              </div>
+              <div class="card">
+                <h4>Culture</h4>
+                <p>Proud, honor-bound, and protective of their mountain home. The Vale lords value martial skill and ancient custom.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="riverlands">
+            <h3>The Riverlands</h3>
+            <p>
+              The Riverlands are a region of fertile river valleys and plains, crisscrossed by major waterways including
+              the Trident. This region is often a battleground due to its position between north and south. The Riverlands
+              are ruled from Riverrun, a castle built at the confluence of three rivers.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Capital</h4>
+                <p>Riverrun, seat of House Tully</p>
+              </div>
+              <div class="card">
+                <h4>Geography</h4>
+                <p>River valleys, fertile plains, and numerous waterways. The Trident is the largest river and defines much of the region.</p>
+              </div>
+              <div class="card">
+                <h4>Major Houses</h4>
+                <p>House Tully (Warden of the Riverlands), House Freys, House Blackwoods, House Brackens, House Vance, House Darry</p>
+              </div>
+              <div class="card">
+                <h4>Culture</h4>
+                <p>The Riverlands are known for hospitality and strength, but suffer greatly in times of war due to their position.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="crownlands">
+            <h3>The Crownlands</h3>
+            <p>
+              The Crownlands are the lands immediately surrounding King's Landing and are ruled directly by the Crown.
+              This region includes the capital city, fertile farmlands, and the Blackwater Bay. The Crownlands are the
+              seat of royal power and the heart of the Realm.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Capital</h4>
+                <p>King's Landing, seat of the Iron Throne</p>
+              </div>
+              <div class="card">
+                <h4>Geography</h4>
+                <p>Fertile lands surrounding King's Landing, including farms, villages, and the Blackwater Bay.</p>
+              </div>
+              <div class="card">
+                <h4>Major Houses</h4>
+                <p>House Targaryen (historically), House Baratheon (current), House Velaryon, House Celtigar, House Sunglass</p>
+              </div>
+              <div class="card">
+                <h4>Culture</h4>
+                <p>The center of power, culture, and intrigue. King's Landing is a city of merchants, lords, and those seeking power.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="reach">
+            <h3>The Reach</h3>
+            <p>
+              The Reach is the most fertile region in Westeros, known for its vast fields of grain and abundance of food.
+              It is a region of great wealth and power. The Reach is ruled from Highgarden, a magnificent castle surrounded
+              by gardens and known for its beauty.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Capital</h4>
+                <p>Highgarden, seat of House Tyrell</p>
+              </div>
+              <div class="card">
+                <h4>Geography</h4>
+                <p>Fertile plains, vast fields of grain, rivers, and abundant natural resources. The Mander is the major river of the region.</p>
+              </div>
+              <div class="card">
+                <h4>Major Houses</h4>
+                <p>House Tyrell (Warden of the Reach), House Hightower, House Florent, House Redwyne, House Tarly, House Rowan</p>
+              </div>
+              <div class="card">
+                <h4>Culture</h4>
+                <p>Known for courtesy, culture, and strength. The Reach lords are educated, wealthy, and politically sophisticated.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="stormlands">
+            <h3>The Stormlands</h3>
+            <p>
+              The Stormlands are a region known for its violent storms and rocky terrain. The region is ruled from Storm's
+              End, a massive castle built to withstand the storms. The Stormlands are fierce and proud, with a martial
+              tradition.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Capital</h4>
+                <p>Storm's End, seat of House Baratheon</p>
+              </div>
+              <div class="card">
+                <h4>Geography</h4>
+                <p>Rocky terrain, storm-prone coasts, and the Dornish Marches. The region is defined by its harsh weather.</p>
+              </div>
+              <div class="card">
+                <h4>Major Houses</h4>
+                <p>House Baratheon (Warden of the Stormlands), House Estermont, House Errol, House Buckler, House Swann</p>
+              </div>
+              <div class="card">
+                <h4>Culture</h4>
+                <p>The Stormlands are known for pride, martial prowess, and a fierce independent spirit. Storm's End is legendary for its strength.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="dorne">
+            <h3>Dorne</h3>
+            <p>
+              Dorne is the southernmost region, a land of deserts, mountains, and a fiercely independent people. Dorne was
+              the last region to be conquered by the Targaryens and maintains a unique culture and legal system. Dorne is
+              ruled from Sunspear.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Capital</h4>
+                <p>Sunspear, seat of House Martell</p>
+              </div>
+              <div class="card">
+                <h4>Geography</h4>
+                <p>Deserts, mountains, and the Red Mountains. Dorne is hot, arid, and difficult to invade.</p>
+              </div>
+              <div class="card">
+                <h4>Major Houses</h4>
+                <p>House Martell (Prince of Dorne), House Yronwood, House Dayne, House Uller, House Vaith, House Jordayne</p>
+              </div>
+              <div class="card">
+                <h4>Culture</h4>
+                <p>Dornish culture is unique, with different laws regarding inheritance and a reputation for passion, pride, and independence.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="westerlands">
+            <h3>The Westerlands</h3>
+            <p>
+              The Westerlands are a region of mountains and valleys, wealthy due to vast reserves of gold and other metals.
+              The region is ruled from Casterly Rock, a massive fortress built into a mountain. The Westerlands are known
+              for their wealth and military power.
+            </p>
+            <div class="card-list">
+              <div class="card">
+                <h4>Capital</h4>
+                <p>Casterly Rock, seat of House Lannister</p>
+              </div>
+              <div class="card">
+                <h4>Geography</h4>
+                <p>Mountains, valleys, and rich mineral deposits. Casterly Rock is built into a mountain and is nearly impregnable.</p>
+              </div>
+              <div class="card">
+                <h4>Major Houses</h4>
+                <p>House Lannister (Warden of the Westerlands), House Crakehall, House Lefford, House Prester, House Swyft, House Serrett</p>
+              </div>
+              <div class="card">
+                <h4>Culture</h4>
+                <p>The Westerlands are known for wealth, military power, and sophisticated culture. House Lannister's gold gives the region great influence.</p>
+              </div>
+            </div>
+          </section>
+        </article>
+      </main>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const searchInput = document.getElementById("searchInput");
+        const resultsBox = document.getElementById("searchResults");
+
+        if (!searchInput || !resultsBox) return;
+
+        const headings = [...document.querySelectorAll("h3, h4")];
+
+        const slugify = (value) =>
+          value
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "");
+
+        headings.forEach((heading) => {
+          const text = heading.textContent.trim();
+          if (!text) return;
+          if (!heading.id) {
+            heading.id = slugify(text);
+          }
+        });
+
+        const entries = headings
+          .map((heading) => {
+            const text = heading.textContent.trim();
+            if (!text) return null;
+            return { text, href: `#${heading.id}` };
+          })
+          .filter(Boolean);
+
+        searchInput.addEventListener("input", (event) => {
+          const query = event.target.value.trim().toLowerCase();
+
+          if (!query) {
+            resultsBox.innerHTML = "";
+            resultsBox.classList.remove("visible");
+            return;
+          }
+
+          const matches = entries.filter((entry) =>
+            entry.text.toLowerCase().includes(query)
+          );
+
+          if (!matches.length) {
+            resultsBox.innerHTML = "<a>No matches found</a>";
+            resultsBox.classList.add("visible");
+            return;
+          }
+
+          resultsBox.innerHTML = matches
+            .slice(0, 8)
+            .map((entry) => `<a href="${entry.href}">${entry.text}</a>`)
+            .join("");
+          resultsBox.classList.add("visible");
+        });
+      });
+    </script>
+  </body>
+</html>
